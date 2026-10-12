@@ -1,1 +1,68 @@
-code
+const int segmentA = 3;
+const int segmentB = 2;
+const int segmentC = 8;
+const int segmentD = 7;
+const int segmentE = 6;
+const int segmentF = 4;
+const int segmentG = 5;
+const int button_1 = 10;
+const int button_2 = 11;
+
+int count = 0;
+int num_array[10][7] = {
+  {1, 1, 1, 1, 1, 1, 0},//0
+  {0, 1, 1, 0, 0, 0, 0},//1
+  {1, 1, 0, 1, 1, 0, 1},//2
+  {1, 1, 1, 1, 0, 0, 1},//3
+  {0, 1, 1, 0, 0, 1, 1},//4
+  {1, 0, 1, 1, 0, 1, 1},//5
+  {1, 0, 1, 1, 1, 1, 1},//6
+  {1, 1, 1, 0, 0, 0, 0},//7
+  {1, 1, 1, 1, 1, 1, 1},//8
+  {1, 1, 1, 1, 0, 1, 1} //9
+};
+
+void setup() {
+  pinMode(segmentA, OUTPUT);
+  pinMode(segmentB, OUTPUT);
+  pinMode(segmentC, OUTPUT);
+  pinMode(segmentD, OUTPUT);
+  pinMode(segmentE, OUTPUT);
+  pinMode(segmentF, OUTPUT);
+  pinMode(segmentG, OUTPUT);
+  
+  pinMode(button_1, INPUT);
+  pinMode(button_2, INPUT);
+  
+  display(num_array[count]);
+}
+
+void loop() {
+  // Check Increment Button (Button 1 on Pin 10)
+  if (digitalRead(button_1) == LOW) {
+    if (count < 9) {
+      count++;
+    } else {
+      count = 0; // Loop back to 0 after 9
+    }
+    display(num_array[count]);
+    delay(200); // Debounce delay
+  }
+
+  // Check Reset Button (Button 2 on Pin 11)
+  if (digitalRead(button_2) == LOW) {
+    count = 0; // Reset count to 0
+    display(num_array[count]);
+    delay(200); // Debounce delay
+  }
+}
+
+void display(int bin[]) {
+  digitalWrite(segmentA, bin[0]);
+  digitalWrite(segmentB, bin[1]);
+  digitalWrite(segmentC, bin[2]);
+  digitalWrite(segmentD, bin[3]);
+  digitalWrite(segmentE, bin[4]);
+  digitalWrite(segmentF, bin[5]);
+  digitalWrite(segmentG, bin[6]);
+}
